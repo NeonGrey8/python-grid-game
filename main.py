@@ -71,3 +71,4 @@ while GameRunning == True:
         fourthgridarray, fifthgridarray, sixthgridarray
         ))
     time.sleep(0.5)
+print(Jake.x)

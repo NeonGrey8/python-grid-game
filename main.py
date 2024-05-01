@@ -19,35 +19,55 @@ class Player:
     
     def movex(self, posx, grid_array):
         self.x.append(posx)
-        grid_array.remove(0)
+        grid_array.remove(1)
         grid_array(posx - 1, 1)
+
+    def spawn(self, spawn_row):
+        spawn_row.pop(self.x - 1)
+        spawn_row.insert(self.x - 1, 1)
 
     def die(self):
         print(self.name + " has died!")
 
-def insertpos(player_position_x, grid_array):
-    grid_array.remove(0)
+def insertpos(player_position_x, prev_position, grid_array):
+    grid_array.pop(player_position_x - 1)
     grid_array.insert(player_position_x - 1, 1)
+    grid_array.pop(prev_pos - 1)
+    grid_array.insert(prev_pos - 1, 0)
+
     return grid_array
 
-def keyautoload():
+def key_handler(posx):
     key = keyboard.read_key()
     if key == 'd':
-        print('d')
+        posx = posx + 1
     if key == 'a':
-        print('a')
+        posx = posx - 1
 
-Jake = Player(1, 2, 'Jake')
+Jake = Player(3, 1, 'Jake')
+begin = input("Begin? Y/N")
+if (begin == 'Y'):
+    GameRunning = True
 
-x = True
+Jake.spawn(firstgridarray)
 
-while x == True:
-    Jake.x = Jake.x + 1
-    firstgridarray = insertpos(Jake.x, firstgridarray)
+while GameRunning == True:
+    prev_pos = Jake.x
+
+    key = keyboard.read_key()
+    if key == 'd':
+        Jake.x = Jake.x + 1
+        firstgridarray = insertpos(Jake.x, prev_pos, firstgridarray)
+    if key == 'a':
+        Jake.x = Jake.x - 1
+        firstgridarray = insertpos(Jake.x, prev_pos, firstgridarray)
+    #if key == 's':
+    #    Jake.y = Jake.y + 1
+    
+    #if (Jake.y == 1):
+    #    firstgridarray
     print("{}\n{}\n{}\n{}\n{}\n{}\n".format(
         firstgridarray, secondgridarray, thirdgridarray,
         fourthgridarray, fifthgridarray, sixthgridarray
         ))
-
-time.sleep(0.1)
-
+    time.sleep(0.5)
